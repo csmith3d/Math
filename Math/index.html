@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" manifest="math.appcache">
+	<head>
+		<link rel="icon" type="image/png" href="MathIcon32.png">
+		<meta charset="utf-8">
+
+		<!-- Tell devices that this can be a web app" -->
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<!-- This doesn't need to scale and should take up all the space -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+
+		<!-- Suggest a name for when the user makes a home-screen icon -->
+		<meta name="application-name" content="Math" />
+    <meta name="apple-mobile-web-app-title" content="Math" />
+
+		<!-- Provide icons for home screen links -->
+		 <meta name="msapplication-TileImage" content="MathIcon144.png" />
+    <link rel="apple-touch-icon" href="MathIcon192.png" />
+    <link rel="icon" sizes="192x192" href="MathIcon192.png" />
+
+		<title>Math</title>
+		<style type="text/css">
+			html {touch-action: manipulation;}
+			body {font-family: Helvetica, Arial, "Lucida Grande", sans-serif;}
+			main {position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;}
+			#mainDiv { font-size: 10vmin; color: #3A3; text-align: center; }
+			#settingsButtonDiv { position: fixed; top: 1vmin; left: 1vmin; touch-action: manipulation; z-index: 75;}
+			#settingsButton {-webkit-appearance: none; background-color: #FFF; border: solid #000 1px; font-size: 5vmin;}
+			#settings { font-size: 5vmin; z-index:100; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; border-style: solid; background-color: #FFFACD; visibility: hidden; display: flex; align-items: center; justify-content: center;}
+			#speechVoiceSelector { font-size: 4vmin;}
+			#speechRateSelector { font-size: 4vmin;}
+			#mathListSelector { font-size: 4vmin;}
+			#okButton { font-size: 5vmin; }
+			#cancelButton {font-size: 5vmin; }
+			#advanceButton {font-size: 5vmin;}
+			#sayButton {font-size: 5vmin;}
+			#guess {font-size: 5vmin;}
+			#showMeButton {font-size: 5vmin;}
+			#progressDiv {position: fixed; top:0; right: 0;}
+		</style>
+		<script src="app.js"></script>
+	</head>
+	<body onload="initialize()">
+		<div id="settings">
+			<div id="settingsInnards">
+				Speech voice: <select id="speechVoiceSelector"></select><br />
+				Speech rate: <select id="speechRateSelector"><option value="1.0">1.0</option></select><br />
+				Math list: <select id="mathListSelector">
+					<option value="0">2s</option>
+					<option value="1">3s</option>
+					<option value="2">4s</option>
+					<option value="3">5s</option>
+					<option value="4">6s</option>
+					<option value="5">7s</option>
+					<option value="6">8s</option>
+					<option value="7">9s</option>
+					<option value="8">10s</option>
+					<option value="9">11s</option>
+					<option value="10">12s</option>
+				</select><br />
+				<button id="okButton" onclick="settingsOK()">OK</button>
+				<button id="cancelButton" onclick="settingsCancel()">Cancel</button>
+			</div>
+		</div>
+		<div id="settingsButtonDiv"><button id="settingsButton" onclick="showSettings()">&equiv;</button></div>
+		<div id="mainDiv">
+		  <span id="promptSpan">Prompt</span><br />
+		  <input type="text" id="guess" onkeyup="if(event.keyCode == 13) { checkAnswer() }" onkeypress="if (event.keyCode == 32 || event.keyCode == 9) { event.preventDefault(); return false; }" /><br />
+		  <button id="advanceButton" onclick="checkAnswer(); focusText();">Check Answer</button><br />
+		  <button id="showMeButton" onclick="showMe(); focusText();">Show Me</button><br />
+		</div>
+		<div id="progressDiv">
+		</div>
+	</body>
+</html>
+
